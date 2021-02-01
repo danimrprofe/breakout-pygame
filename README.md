@@ -1,5 +1,7 @@
 # breakout-pygame
-Juego breakout hecho con pygame
+Juego breakout hecho con pygame. 
+
+Podemos encontrar las instrucciones originales aquí: https://atariage.com/manual_html_page.php?SoftwareID=889
 
 # Objetos
 
