@@ -62,3 +62,18 @@ El objeto bloque es el más sencillo puesto que es un rectángulo que:
 9. Comprobar si la pelota colisiona con algún bloque
 10. Eliminar los bloques que han sido tocados y en consecuencia, actualizar el marcador y comprobar si hemos ganado o perdido
 
+# Colisiones
+
+Es importante comprobar si dos objetos chocan (colisionan) para saber si:
+
+- Tienen que rebotar
+- Tiene que desaparecer o cambiar
+
+Para comprobar si la pelota choca con algún bloque, utilizaremos la función "spritecollide".
+
+- Encuentra sprites en un grupo (grupo bloques) que colisionan con otro sprite (pelota).
+- Devuelve una lista que contiene todos los Sprites de un grupo que han colisionado con otro Sprite. 
+- La intersección se determina comparando el atributo Sprite.rect de cada Sprite. Todos los sprites deben tener un valor "rect", que es un rectángulo del área del sprite, que se utilizará para calcular la colisión.
+- El argumento de dokill es una booleano. Si se establece en Verdadero, todos los Sprites que colisionen se eliminarán del Grupo.
+
+
