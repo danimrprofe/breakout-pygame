@@ -22,13 +22,13 @@ class Raqueta(pygame.sprite.Sprite):
         # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
 
-    def moveLeft(self, pixels):
+    def mover_izquierda(self, pixels):
         self.rect.x -= pixels
         #Check that you are not going too far (off the screen)
         if self.rect.x < 0:
           self.rect.x = 0
           
-    def moveRight(self, pixels):
+    def mover_derecha(self, pixels):
         self.rect.x += pixels
         #Check that you are not going too far (off the screen)
         if self.rect.x > 700:

@@ -1,5 +1,5 @@
 import pygame
-from random import randint
+from random import choice, randint
 BLACK = (0,0,0)
  
 class Pelota(pygame.sprite.Sprite):
@@ -29,4 +29,9 @@ class Pelota(pygame.sprite.Sprite):
     
     def rebotar(self):
         self.velocity[0] = -self.velocity[0]
-        self.velocity[1] = randint(-8,8)
+        
+        allowed_values = list(range(-8, 8))
+        allowed_values.remove(0)
+
+        self.velocity[1] = choice(allowed_values)
+        
