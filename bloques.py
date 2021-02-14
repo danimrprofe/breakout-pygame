@@ -39,15 +39,16 @@ class Bloques():
             self.grupo.add(bloque)
 
     def quedanBloques(self):
-        if len(self.grupo) == 0:
+        return len(self.grupo) == 0:
             return False
         else:
             return True
 
     def colisionBloques(self, pelota):
-        bloques_golpeados = pygame.sprite.spritecollide(
-            pelota, self.grupo, False)
-        for bloque in bloques_golpeados:
-            self.bloquesDestruidos += 1
-            pelota.rebotar()
-            bloque.kill()
+        bloques_golpeados = pygame.sprite.spritecollide(pelota, self.grupo, False)
+        if not bloques_golpeados: self.bloquesDestruidos = 0
+        else:
+            for bloque in bloques_golpeados:
+                self.bloquesDestruidos += 1
+                pelota.rebotar()
+                bloque.kill()

@@ -4,19 +4,12 @@ BLACK = (0,0,0)
 class Bloque(pygame.sprite.Sprite):
     #This class represents a brick. It derives from the "Sprite" class in Pygame.
  
-    def __init__(self, color, width, height):
-        # Call the parent class (Sprite) constructor
+    def __init__(self, color, ancho, alto):
+         # Llamamos al constructor de la clase Sprite
         super().__init__()
+         
+        self.image = pygame.Surface([ancho, alto])
+        pygame.draw.rect(self.image, color, [0, 0, ancho, alto])
  
-        # Pass in the color of the brick, and its x and y position, width and height.
-        # Set the background color and set it to be transparent
-        self.image = pygame.Surface([width, height])
-        #self.image = pygame.image.load("bloque.png").convert_alpha()
-        #self.image.fill(BLACK)
-        #self.image.set_colorkey(BLACK)
- 
-        # Draw the brick (a rectangle!)
-        pygame.draw.rect(self.image, color, [0, 0, width, height])
- 
-        # Fetch the rectangle object that has the dimensions of the image.
+        # Cogemos las medidas de la imagen
         self.rect = self.image.get_rect()

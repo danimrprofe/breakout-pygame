@@ -4,7 +4,7 @@ from colores import Colores
 from ventana import Ventana
 from juego import Juego
 
-from pygame.locals import *
+from pygame.locals import FULLSCREEN,DOUBLEBUF
 # Importamos las clases Raqueta, pelota y bloque
 from raqueta import Raqueta
 from pelota import Pelota
@@ -35,35 +35,28 @@ def main():
         juego = Juego(velocidad, puntuacion, vidas)
 
         # Creamos la raqueta, la pelota y los bloques
-        raqueta = Raqueta(Colores.LIGHTBLUE, 100, 10, 350, 560)
+        raqueta = Raqueta(Colores.LIGHTBLUE, 100, 10, 350, 560, ventana)
         pelota = Pelota(Colores.BLANCO, 10, 10, 345, 195)
         bloques = Bloques(ventana)
 
-        # GRUPO con todos los sprites del juego
-        grupo_sprites = pygame.sprite.Group()
-
-        # Agregamos la pelota y la raqueta al grupo de sprites
-        grupo_sprites.add(raqueta)
-        grupo_sprites.add(pelota)
-        grupo_sprites.add(bloques.grupo)
+        # GRUPO con todos los sprites del juego. Agregamos la pelota y la raqueta al grupo de sprites
+        grupo_sprites = pygame.sprite.Group(raqueta,pelota,bloques.grupo)                     
 
         # Cremos las filas de ladrillos
+
+        pelota.reiniciar() 
 
         while not juego.finPartida:
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.QUIT:  # If user clicked close
-                    juego.finPartida = False  # Flag that we are done so we exit this loop
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_x:  # Pressing the x Key will quit the game
-                        juego.finPartida = False
+                    juego.finPartida = True  # Flag that we are done so we exit this loop
 
             # Comprobar si presionamos alguna tecla
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_LEFT]:
-                raqueta.moveLeft(5)
-            if keys[pygame.K_RIGHT]:
-                raqueta.moveRight(5)
-
+            if keys[pygame.K_x]: juego.finPartida = True
+            if keys[pygame.K_LEFT]: raqueta.mover(-5)
+            if keys[pygame.K_RIGHT]: raqueta.mover(5)
+            
             grupo_sprites.update()
 
             # Comprobar el rebote de la pelota con alguna de las paredes
@@ -71,8 +64,12 @@ def main():
             juego.pelota_choca_pared(pelota, ventana)
             if juego.pelota_choca_abajo(pelota, ventana):
                 juego.perdervida()
-                if juego.finPartida:
-                    ventana.pinta_gameover()
+                pelota.reiniciar()    
+                raqueta.reiniciar()
+                ventana.actualiza_pantalla(grupo_sprites, juego.puntuacion, juego.vidas)   
+                pygame.time.wait(3000)         
+                
+                if juego.finPartida: ventana.pinta_gameover()
 
             juego.colision_pelota_raqueta(pelota, raqueta)
 
@@ -83,10 +80,8 @@ def main():
                     ventana.pinta_nivelcompletado()
                     juego.finPartida = False
 
-            # Fondo con color
-
-            ventana.actualiza_pantalla(
-                grupo_sprites, juego.puntuacion, juego.vidas)
+            # Actualizar pantalla            
+            ventana.actualiza_pantalla(grupo_sprites, juego.puntuacion, juego.vidas)
 
     pygame.quit()
 
